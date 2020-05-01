@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace csharp_data_structures.LinkedList
+namespace csharp_data_structures.LinkedLists
 {
-    public class SinglyLinkedList<T> : ICollection<T>
+    public class DoublyLinkedList<T> : ICollection<T>
     {
-        public LLNode<T> Head { get; private set; }
+        public DLLNode<T> Head { get; set; }
 
-        public LLNode<T> Tail { get; private set; }
+        public DLLNode<T> Tail { get; set; }
 
         public void AddToFront(T item)
         {
-            var newNode = new LLNode<T>(item);
+            var newNode = new DLLNode<T>(item);
 
             if (Count == 0)
             {
@@ -21,21 +21,23 @@ namespace csharp_data_structures.LinkedList
                 return;
             }
 
-            newNode.Next = Head;
+            var currentHead = Head;
             Head = newNode;
+            Head.Next = currentHead;
+            currentHead.Previous = Head;
             Count++;
         }
 
         public void AddToBack(T item)
         {
-            var newNode = new LLNode<T>(item);
-
             if (Count == 0)
             {
                 // since it's the fist node.
                 this.AddToFront(item);
                 return;
             }
+
+            var newNode = new DLLNode<T>(item) { Previous = Tail };
 
             Tail.Next = newNode;
             Tail = newNode;
@@ -50,6 +52,7 @@ namespace csharp_data_structures.LinkedList
             Head = Head.Next;
             Count--;
 
+            // if there was only one element (meaning Head.Next == null) after removing it, clear the Tail pointer.
             if (Count == 0)
                 Tail = null;
         }
@@ -59,26 +62,12 @@ namespace csharp_data_structures.LinkedList
             if (Count == 0)
                 return;
 
-            if (Count == 1)
-            {
-                Head = null;
-                Tail = null;
-                Count--;
-                return;
-            }
-
-
-            LLNode<T> previous = Head;
-            var start = Head;
-            while(start.Next != null)
-            {
-                previous = start;
-                start = start.Next;
-            }
-
-            previous.Next = null;
-            Tail = previous;
+            Tail = Tail.Previous;
             Count--;
+
+            // if there was only one element (meaning Tail.Previous == null) after removing it, clear the Head pointer.
+            if (Count == 0)
+                Head = null;
         }
 
 
@@ -86,9 +75,9 @@ namespace csharp_data_structures.LinkedList
 
         public IEnumerator<T> GetEnumerator()
         {
-            LLNode<T> current = Head;
+            DLLNode<T> current = Head;
 
-            while(current != null)
+            while (current != null)
             {
                 yield return current.Value;
                 current = current.Next;
@@ -97,7 +86,7 @@ namespace csharp_data_structures.LinkedList
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            LLNode<T> current = Head;
+            DLLNode<T> current = Head;
 
             while (current != null)
             {
@@ -111,7 +100,7 @@ namespace csharp_data_structures.LinkedList
 
         #region ICollection
 
-        public int Count { get; private set; }
+        public int Count { get; set; }
 
         public bool IsReadOnly => false;
 
@@ -132,9 +121,9 @@ namespace csharp_data_structures.LinkedList
             if (Count == 0)
                 return false;
 
-            LLNode<T> current = Head;
+            DLLNode<T> current = Head;
 
-            while(current != null)
+            while (current != null)
             {
                 if (current.Value.Equals(item))
                     return true;
@@ -145,8 +134,8 @@ namespace csharp_data_structures.LinkedList
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            LLNode<T> current = Head;
-            while(current != null)
+            DLLNode<T> current = Head;
+            while (current != null)
             {
                 array[arrayIndex++] = current.Value;
                 current = current.Next;
@@ -158,23 +147,26 @@ namespace csharp_data_structures.LinkedList
             if (Count == 0)
                 return false;
 
-            LLNode<T> previous = null;
-            LLNode<T> current = Head;
+            DLLNode<T> current = Head;
 
             while (current != null)
             {
                 if (current.Value.Equals(item))
                 {
-                    previous.Next = current.Next;
+                    // link the next pointer of the previous node to the next node of the current node.
+                    current.Previous.Next = current.Next;
+
+                    // link the previous pointer of the next node to the previous of the current node.
+                    current.Next.Previous = current.Previous;
                     Count--;
                     return true;
                 }
-                previous = current;
                 current = current.Next;
             }
             return false;
         }
 
         #endregion ICollection
+
     }
 }

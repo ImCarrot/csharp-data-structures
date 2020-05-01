@@ -1,4 +1,4 @@
-﻿namespace csharp_data_structures.LinkedList
+﻿namespace csharp_data_structures.LinkedLists
 {
     public class DLLNode<T>
     {
