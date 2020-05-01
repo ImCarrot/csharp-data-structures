@@ -1,4 +1,5 @@
 ﻿using csharp_data_structures.LinkedList;
+using csharp_data_structures.Stacks;
 
 namespace csharp_data_structures
 {
@@ -21,6 +22,12 @@ namespace csharp_data_structures
             primeNumbers.RemoveLast();
 
             PrintHelpers.PrintFromNode(primeNumbers.Head);
+
+
+            PostfixCalculator postfixCalculator = new PostfixCalculator();
+            int result = postfixCalculator.calculate("5 6 7 * + 1 -");
+            System.Console.WriteLine($"The postfix expression result is: {result}");
+
         }
     }
 }
