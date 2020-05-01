@@ -3,7 +3,7 @@ A sample project to demystify the working of the data structures. These are very
 
 > These are just sample implementations and not optimized for production code. In production I'd highly recommend using the DataStructures provided by the development platform since it'll handle a lot of things for you (one example would be calling the `Dispose()` of an object that implements the `IDisposible` interface) when objects are cleared from memory.
 
-#### Questions and Answers
+## Questions and Answers
 
 **Question**: Why did we initialize the Array to 0 in the array implementations instead of a fixed size? or why not `null`?
 
