@@ -1,4 +1,4 @@
-﻿using csharp_data_structures.LinkedList;
+﻿using csharp_data_structures.LinkedLists;
 
 namespace csharp_data_structures
 {
