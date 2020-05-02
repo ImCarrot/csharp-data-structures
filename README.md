@@ -1,7 +1,7 @@
 # csharp-data-structures
 A sample project to demystify the working of the data structures. These are very basic and non optimal implementations of these data structures but are useful to get a jump start on the data structures
 
-> These are just sample implementations and not optimized for production code. In production I'd highly recommend using the DataStructures provided by the development platform since it'll handle a lot of things for you (one example would be calling the `Dispose()` of an object that implements the `IDisposible` interface) when objects are cleared from memory.
+> These are just sample implementations and **not optimized for production code** but are for the purpose of understanding. A lot of decisions are made only to keep the code simple. In production I'd highly recommend using the DataStructures provided by the development platform since it'll handle a lot of things for you (one example would be calling the `Dispose()` of an object that implements the `IDisposible` interface) when objects are cleared from memory.
 
 ## Questions and Answers
 
